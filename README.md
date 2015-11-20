@@ -9,13 +9,13 @@ Easy App SDK iOS版本
 
 ###快速使用
 
-1.引入头文件
+####1.引入头文件
 
 ```
 #import <SangforEasyAppSDK4iOS/AuthHelper.h>
 ```
 
-2.初始化
+####2.初始化组件
 
 ```
 NSString *host = @"主机地址";//服务器IP地址
@@ -23,7 +23,7 @@ short port = 443;//端口号，默认是443
 AuthHelper *vpnHelper = [[AuthHelper alloc] initWithHostAndPort:host port:443 delegate:self];
 ```
 
-3.认证
+####3.认证
 
 ```
 [vpnHelper setAuthParam:@PORPERTY_NamePasswordAuth_NAME param:@"用户名"];
@@ -31,7 +31,7 @@ AuthHelper *vpnHelper = [[AuthHelper alloc] initWithHostAndPort:host port:443 de
 [vpnHelper loginVpn:SSL_AUTH_TYPE_PASSWORD];
 ```
 
-4.回调,实现SangforSDKDelegate的回调方法
+####4.回调,实现SangforSDKDelegate的回调方法
 
 ```
 - (void)onCallBack:(const VPN_RESULT_NO)vpnErrno authType:(const int)authType {
@@ -58,4 +58,20 @@ AuthHelper *vpnHelper = [[AuthHelper alloc] initWithHostAndPort:host port:443 de
             break;
     }
 }
+```
+
+###备注
+
+####1.Xcode7 Bitcode问题
+
+因为使用了静态库，所以会报BitCode的错误，需要在Podfile中设置ENABLE_BITCODE=NO
+
+```
+post_install do |installer|
+    installer.pods_project.targets.each do |target|
+        target.build_configurations.each do |config|
+            config.build_settings['ENABLE_BITCODE'] = 'NO'
+        end
+    end
+end
 ```
